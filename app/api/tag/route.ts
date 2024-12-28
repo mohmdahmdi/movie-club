@@ -1,8 +1,9 @@
 import pool from "@/app/assets/db/pool";
+import { ITagPostRequest } from "@/app/assets/interfaces/endpoints";
 
 export async function POST(req: Request) {
   try {
-    const data: { name: string } = await req.json();
+    const data : ITagPostRequest = await req.json();
 
     await pool.query(
       `INSERT INTO tag(name) VALUES ($1)`,

@@ -1,4 +1,8 @@
 import pool from "@/app/assets/db/pool";
+import {
+  IWatchedDeleteRequest,
+  IWatchedPostRequest,
+} from "@/app/assets/interfaces/endpoints";
 
 export async function GET(req: Request) {
   try {
@@ -41,13 +45,12 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) {
   try {
-    const data: { user_id: number; movie_id: number; watched_at?: Date } =
-      await req.json();
+    const data: IWatchedPostRequest = await req.json();
 
     // Use parameterized queries to avoid SQL injection
     await pool.query(
-      `INSERT INTO watched (user_id, movie_id, watched_at) VALUES 
-      (${data.user_id}, ${data.movie_id}, ${data.watched_at || "default"})`
+      `INSERT INTO watched (user_id, movie_id, watched_at) VALUES ($1, $2, $3)`,
+      [data.user_id, data.movie_id, data.watched_at || "DEFAULT"]
     );
 
     // If insertion was successful, return success message
@@ -69,7 +72,7 @@ export async function POST(req: Request) {
 
 export async function DELETE(req: Request) {
   try {
-    const data: { user_id: number; movie_id: number } = await req.json();
+    const data: IWatchedDeleteRequest = await req.json();
 
     // Use parameterized queries to avoid SQL injection
     const result = await pool.query(

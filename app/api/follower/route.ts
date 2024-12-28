@@ -1,7 +1,8 @@
 import pool from "@/app/assets/db/pool";
+import { IFollowRequest } from "@/app/assets/interfaces/endpoints";
 
 export async function POST(req: Request) {
-const data : {followerId : number, followedId : number} = await req.json();
+const data : IFollowRequest = await req.json();
 
   try {
     // Use parameterized queries to avoid SQL injection
@@ -29,7 +30,7 @@ const data : {followerId : number, followedId : number} = await req.json();
 }
 
 export async function DELETE(req: Request) {
-  const data: { followerId: number; followedId: number } = await req.json();
+  const data : IFollowRequest = await req.json();
    try {
      // Use parameterized queries to avoid SQL injection
      const result = await pool.query(
