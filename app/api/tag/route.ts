@@ -4,8 +4,9 @@ export async function POST(req: Request) {
   try {
     const data: { name: string } = await req.json();
 
-    const result = await pool.query(
-      `INSERT INTO tag(name, created_at) VALUES (${data.name})`
+    await pool.query(
+      `INSERT INTO tag(name) VALUES ($1)`,
+      [data.name]
     );
 
     return new Response(
