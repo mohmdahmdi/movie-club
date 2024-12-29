@@ -1,5 +1,3 @@
-
-
 // review endpoint interfaces
 export interface IReviewPostRequest {
   user_id: number;
@@ -30,7 +28,6 @@ export interface IFollowRequest {
 }
 
 // watched endpoint interfaces
-
 export interface IWatchedPostRequest {
   user_id: number;
   movie_id: number;
@@ -40,4 +37,18 @@ export interface IWatchedPostRequest {
 export interface IWatchedDeleteRequest {
   user_id: number;
   movie_id: number;
+}
+
+// like endpoint interfaces
+export interface ILikePostRequest {
+  user_id: number;
+  movie_id?: string;
+  review_id?: string;
+  list_id?:number;
+  created_at?: Date;
+}
+
+
+export interface ILikeDeleteRequest {
+  like_id: number;
 }
