@@ -1,87 +1,69 @@
 import requests
 from bs4 import BeautifulSoup
 import csv
+import re
 
+# datas
 base_url = "https://digimoviez.com/"
-res = requests.get(base_url)
+csv_addr="" 
 
+
+res = requests.get(base_url)
 soup = BeautifulSoup(res.text)
-divs = soup.find_all('div', class_='plot_text')
+
+# holder movie cards list
+holders = soup.find_all('div', class_='item_def_loop')
+
+# holder of title of movie
+title_holders = [div.find('div', class_='title_h') for div in holders]
+
+pattern = re.compile(r'دانلود فیلم\s(.+)')
+titles_years1 = [pattern.search(holder.text).group(1) for holder in title_holders]
+
+pattern = re.compile(r'(.+)\s(\d{4})')
+titles_years = [pattern.search(title_year) for title_year in titles_years1]
+
+titles=[match.group(1) for match in titles_years]
+years=[match.group(2) for match in titles_years]
+#######################################################
+
+pattern1 = re.compile(r"محصول کشور\s.+\n.+\n.+\n.+\n(.*)\n")
+countries = [str(div.text) for div in holders]
+
+
+
+
+for div in holders:
+    print(countries)
+
+
+
+
+
+
+
+
+
+
+
+
+
+# with open('names.csv', 'w', newline='') as csvfile:
+#     fieldnames = ['first_name', 'last_name']
+#     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+
+#     writer.writeheader()
+#     writer.writerow({'first_name': 'Baked', 'last_name': 'Beans'})
+#     writer.writerow({'first_name': 'Lovely', 'last_name': 'Spam'})
+#     writer.writerow({'first_name': 'Wonderful', 'last_name': 'Spam'})
+
+
 # complete the expectations and write in a csv file
 
-for i in range(1, 862):
-  movie_url = base_url + f'page/{i}/'
-  res = requests.get(movie_url)
-  soup = BeautifulSoup(res.text)
-  divs = soup.find_all('div', class_='plot_text') #
+# for i in range(1, 862):
+#   movie_url = base_url + f'page/{i}/'
+#   res = requests.get(movie_url)
+#   soup = BeautifulSoup(res.text)
+#   divs = soup.find_all('div', class_='plot_text') #
   
   # complete the expectations and write in a csv file
-
-for div in divs:
-    print(div.prettify())
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-################################################################
-# class MovieScraper:
-#   def __init__(self, base_url):
-#     self.base_url = base_url
-
-#   def fetch_page(self, url):
-#     response = requests.get(url)
-#     if response.status_code == 200:
-#       return response.text
-#     else:
-#       return None
-
-#   def parse_movie_data(self, html_content):
-#     soup = BeautifulSoup(html_content, 'html.parser')
-#     movies = []
-#     for movie in soup.find_all('div', class_='movie'):
-#       title = movie.find('h2').text
-#       rating = movie.find('span', class_='rating').text
-#       movies.append({'title': title, 'rating': rating})
-#     return movies
-
-#   def scrape_movies(self):
-#     html_content = self.fetch_page(self.base_url)
-#     if html_content:
-#       return self.parse_movie_data(html_content)
-#     else:
-#       return []
-
-# # Example usage:
-# # base_url = 'https://example-movie-site.com'
-# # scraper = MovieScraper(base_url)
-# # movies = scraper.scrape_movies()
-# # for movie in movies:
-# #   print(f"Title: {movie['title']}, Rating: {movie['rating']}")
-# # Example usage:
-# base_url = 'https://example-movie-site.com'
-# scraper = MovieScraper(base_url)
-# movies = scraper.scrape_movies()
-
-# # Write to CSV file
-# csv_file = 'movies.csv'
-# with open(csv_file, mode='w', newline='', encoding='utf-8') as file:
-#   writer = csv.DictWriter(file, fieldnames=['title', 'rating'])
-#   writer.writeheader()
-#   for movie in movies:
-#     writer.writerow(movie)
-
-# print(f"Data has been written to {csv_file}")
