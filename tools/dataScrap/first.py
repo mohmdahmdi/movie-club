@@ -27,14 +27,39 @@ titles=[match.group(1) for match in titles_years]
 years=[match.group(2) for match in titles_years]
 #######################################################
 
-pattern1 = re.compile(r"محصول کشور\s.+\n.+\n.+\n.+\n(.*)\n")
-countries = [str(div.text) for div in holders]
+country_list = [div.select("div.meta_loop > div.meta_item > ul > li:nth-of-type(6) > span.res_item") for div in holders]
+countries = [country[0].text for country in country_list]
+#######################################################
+
+description_list = [div.select("div.plot_text")[0].text for div in holders]
+#######################################################
+
+rating_list = [div.select("strong")[0].text for div in holders]
+#######################################################
+
+minutes_list = [div.select(
+  "div.meta_loop > div.meta_item > ul > li:nth-of-type(2) > span.res_item"
+  )[0].text for div in holders]
+minutes_list = [minutes.split(" ")[0] for minutes in minutes_list]
+#######################################################
+
+genre_list = [div.select(
+  "div.meta_loop > div.meta_item > ul > li:nth-of-type(3) > span.res_item"
+  )[0].text for div in holders]
+#######################################################
+
+director_list = [div.select(
+  "div.meta_loop > div.meta_item > ul > li:nth-of-type(4) > span.res_item"
+  )[0].text for div in holders]
+########################################################
+
+cast_list = [div.select(
+  "div.meta_loop > div.meta_item > ul > li:nth-of-type(5) > span.res_item"
+  )[0].text for div in holders]
 
 
-
-
-for div in holders:
-    print(countries)
+for div in cast_list:
+    print(div, "\n")
 
 
 
