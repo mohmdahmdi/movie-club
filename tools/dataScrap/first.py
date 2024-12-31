@@ -27,7 +27,9 @@ titles=[match.group(1) for match in titles_years]
 years=[match.group(2) for match in titles_years]
 #######################################################
 
-country_list = [div.select("div.meta_loop > div.meta_item > ul > li:nth-of-type(6) > span.res_item") for div in holders]
+country_list = [div.select(
+  "div.meta_loop > div.meta_item > ul > li:nth-of-type(6) > span.res_item"
+  ) for div in holders]
 countries = [country[0].text for country in country_list]
 #######################################################
 
@@ -51,14 +53,17 @@ genre_list = [div.select(
 director_list = [div.select(
   "div.meta_loop > div.meta_item > ul > li:nth-of-type(4) > span.res_item"
   )[0].text for div in holders]
-########################################################
+#######################################################
 
 cast_list = [div.select(
   "div.meta_loop > div.meta_item > ul > li:nth-of-type(5) > span.res_item"
   )[0].text for div in holders]
+#######################################################
 
+poster_list = [div.select("img")[0].get("src") for div in holders]
+#######################################################
 
-for div in cast_list:
+for div in poster_list:
     print(div, "\n")
 
 
