@@ -7,6 +7,7 @@ moviesCsv = "E:/codes/projects/movie-club/tools/csv/movies.csv"
 movieCastCsv= "E:/codes/projects/movie-club/tools/csv/movie_cast.csv"
 movieCrewCsv= "E:/codes/projects/movie-club/tools/csv/movie_crew.csv"
 movieGenreCsv= "E:/codes/projects/movie-club/tools/csv/movie_genre.csv"
+notFetched = []
 
 for i in range(0, 862):
   # datas
@@ -21,64 +22,89 @@ for i in range(0, 862):
     soup = BeautifulSoup(res.text)
   except:
     print(f"Error: Failed to fetch the page {i}.")
+    notFetched.append(i)
     continue
-  if (res.status_code != 200):
-    break
-
+  
   print("working on data...")
   # holder movie cards list
   holders = soup.find_all('div', class_='item_def_loop')
-
-  # holder of title of movie
-  title_holders = [div.find('div', class_='title_h') for div in holders]
-
-  titles_years1 = [holder.select("h2 > a")[0].text for holder in title_holders]
-
-  pattern = re.compile(r'^\S+\s+\S+\s+(.+?)\s+(\d{4})')
-  titles_years = [pattern.search(title_year) for title_year in titles_years1]
-
-  titles=[match.group(1) for match in titles_years]
-  years=[match.group(2) for match in titles_years]
-  #######################################################
-
-  country_list = [div.select(
-    "div.meta_loop > div.meta_item > ul > li:nth-of-type(6) > span.res_item"
-    ) for div in holders]
-  countries = [country[0].text if country else "Unknown" for country in country_list]
-
-  #######################################################
-
-  description_list = [div.select("div.plot_text")[0].text if div else "unknown" for div in holders]
-  #######################################################
-
-  rating_list = [div.select("strong")[0].text if div else "unknown" for div in holders]
-  #######################################################
-
-  minutes_list = [div.select(
-    "div.meta_loop > div.meta_item > ul > li:nth-of-type(2) > span.res_item"
-    )[0].text for div in holders]
-  minutes_list = [minutes.split(" ")[0] if minutes else "unknown" for minutes in minutes_list]
-  #######################################################
-
-  genre_list = [div.select(
-    "div.meta_loop > div.meta_item > ul > li:nth-of-type(3) > span.res_item"
-    )[0].text if div else "unknown" for div in holders]
-  #######################################################
-
-  director_list = [div.select(
-    "div.meta_loop > div.meta_item > ul > li:nth-of-type(4) > span.res_item"
-    )[0].text if div else "unknown" for div in holders]
-  #######################################################
-
-  cast_list = [div.select(
-    "div.meta_loop > div.meta_item > ul > li:nth-of-type(5) > span.res_item"
-    )[0].text if div else "unknown" for div in holders]
-  #######################################################
-
-  poster_list = [div.select("img")[0].get("src") if div else "unknown" for div in holders]
-  #######################################################
+  titles_years = []
+  titles= []
+  years = []
+  countries = []
+  description_list = []
+  rating_list = []
+  minutes_list = []
+  genre_list = []
+  director_list = []
+  cast_list = []
+  poster_list = []
   
-  print("writing on movies.csv...")
+  for index, holder in enumerate(holders) :
+    li_order = ['sth', 'minute', 'genre', 'director', 'cast', 'country']
+    # title, year
+    titles_years.append(holder.find('div', class_='title_h').select("h2 > a")[0].text)
+    pattern = re.compile(r'^\S+\s+\S+\s+(.+?)\s+(\d{4})')
+    match = pattern.search(titles_years[index])
+    if match :
+      titles.append(match.group(1))
+      years.append(match.group(2))
+    else :
+      titles.append("unknown")
+      years.append("unknown")
+    
+    # minutes
+    minute = holder.select(
+      "div.meta_loop > div.meta_item > ul > li:nth-of-type(2) > span.res_item"
+      )[0].text.split(' ')[0]
+    pattern = re.compile(r'\d{2,4}')
+    
+    if pattern.search(minute) != None:
+      minutes_list.append(minute)
+    else :
+      minutes_list.append('unknown')
+      li_order.remove('minute')
+      
+    # genre
+    genre = holder.select(
+      f'div.meta_loop > div.meta_item > ul > li:nth-of-type({li_order.index('genre') + 1}) > span.res_item'
+      )[0].text
+    if genre:
+      genre_list.append(genre)
+    else : 
+      genre_list.append('unkonwn')
+      li_order.remove('genre')
+    
+    # director
+    director =holder.select(
+      f'div.meta_loop > div.meta_item > ul > li:nth-of-type({li_order.index('director') + 1}) > span.res_item'
+      )[0].text
+    
+    if director : 
+      director_list.append(director)
+    else :
+      director_list.append('unknown')
+      li_order.remove('director')
+    
+    # cast
+    cast = holder.select(
+      f'div.meta_loop > div.meta_item > ul > li:nth-of-type({li_order.index("cast") + 1}) > span.res_item'
+    )
+    cast_list.append(cast[0].text if cast else "unknown")
+    
+    # country
+    country = holder.select(
+      f'div.meta_loop > div.meta_item > ul > li:nth-of-type({li_order.index('country') + 1}) > span.res_item'
+      )
+    countries.append(country[0].text if country else "unknown")
+    
+    # poster
+    poster_list.append(holder.select("img")[0].get("src") if holder.select("img") else "unknown")
+
+    # description
+    description_list.append(holder.select("div.plot_text")[0].text if holder.select("div.plot_text") else "unknown")
+    # rating
+    rating_list.append(holder.select("strong")[0].text if holder.select("strong") else "unknown")
 
   mode = 'w' if i == 0 else 'a'
   
@@ -151,8 +177,8 @@ print('''
       Movie data scraping completed.
       ##############################
       ''')
+print(notFetched)
 
-# 391
 
 
 
