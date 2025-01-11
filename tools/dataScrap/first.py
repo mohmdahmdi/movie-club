@@ -9,7 +9,7 @@ movieCrewCsv= "E:/codes/projects/movie-club/tools/csv/movie_crew.csv"
 movieGenreCsv= "E:/codes/projects/movie-club/tools/csv/movie_genre.csv"
 notFetched = []
 
-for i in range(0, 862):
+for i in range(1, 862):
   # datas
   print("fetch count : " + str(i) + " / 862")
   base_url = f'https://digimoviez.com/page/{i}'
