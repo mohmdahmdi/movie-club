@@ -9,7 +9,7 @@ def insert_data(conn, data):
         extras.execute_batch(cursor, '''
             INSERT INTO crew (name, role)
             VALUES (%s, %s)
-        ''', [(crew, "director") for crew in data])  # Convert set to list of tuples
+        ''', [(crew.title(), "director") for crew in data])  # Convert set to list of tuples
         conn.commit()
         print(f"Successfully inserted {len(data)} rows.")
     except Exception as e:
@@ -43,7 +43,7 @@ def read_csv(file_path):
                     skipped_rows += 1
                     print(f"Skipped row due to error: {row} - {e}")
         
-        print(f"Successfully read {len(crews)} unique genres from CSV.")
+        print(f"Successfully read {len(crews)} unique crews from CSV.")
         print(f"Total rows skipped: {skipped_rows}")
     except Exception as e:
         print(f"Error reading CSV file: {e}")
