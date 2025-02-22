@@ -44,11 +44,16 @@ export interface ILikePostRequest {
   user_id: number;
   movie_id?: string;
   review_id?: string;
-  list_id?:number;
+  list_id?: number;
   created_at?: Date;
 }
 
-
 export interface ILikeDeleteRequest {
   like_id: number;
+}
+
+export interface ISliderPostRequest {
+  slider_id?: number;
+  url: string;
+  movie_id: string;
 }
