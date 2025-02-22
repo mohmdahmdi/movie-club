@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import Navbar from './components/navbar/navbar';
 
 const vazir = localFont({
   src: "./assets/fonts/vazir/Vazir.woff",
@@ -8,9 +9,9 @@ const vazir = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "book club",
+  title: "movie club",
   description:
-    "An online community for book lovers",
+    "A community for movie lovers",
 };
 
 export default function RootLayout({
@@ -23,15 +24,7 @@ export default function RootLayout({
       <body
         className={`${vazir.className} antialiased`}
       >
-        <nav className="w-full fixed top-0 flex text-center justify-center items-center py-2 gap-x-3">
-          <h1 className="text-xl font-bold">تایتل سایت</h1>
-          <div className="border rounded-full px-3 py-2">ورود / ثبت نام</div>
-          <div>فیلم ها</div>
-          <div>لیست ها</div>
-          <div>اعضا</div>
-          <div>ژورنال</div>
-          <input className="border rounded-full p-1" type="text" placeholder="جست و جو ..." />
-        </nav>
+        <Navbar />
         {children}
       </body>
     </html>
