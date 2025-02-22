@@ -57,3 +57,18 @@ export interface ISliderPostRequest {
   url: string;
   movie_id: string;
 }
+
+export interface ISliderGetResponse {
+  url: string;
+  movie_id: string;
+  title: string;
+  year: number;
+  language: string;
+  studios: string[];
+  description: string;
+  created_at: string;
+  rating: number;
+  minute: string;
+  poster: string;
+  country: string[];
+}
