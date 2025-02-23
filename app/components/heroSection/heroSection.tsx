@@ -5,6 +5,7 @@ import useAxios from "@/app/hooks/useAxios";
 import { useEffect, useState } from "react";
 import { ISliderGetResponse } from "../../assets/interfaces/endpoints";
 import Image from "next/image";
+import HeroSectionCard from "./heroSectionCard";
 
 const HeroSection = () => {
   const { data, error, loading, get } = useAxios<ISliderGetResponse[]>();
@@ -29,7 +30,7 @@ const HeroSection = () => {
   if (!data || data.length === 0) return <div>No images found</div>;
 
   return (
-    <div className="relative w-full h-[100vh] -z-10">
+    <div className="relative w-full h-[100vh] -z-10 brightness-[70%]">
       <Image
         src={data[currentIndex].url}
         alt={data[currentIndex].title}
@@ -38,7 +39,17 @@ const HeroSection = () => {
         priority
       />
 
-      <div className="absolute inset-0 bg-gradient-to-t from-black/[1003] to-transparent"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-black/100 to-transparent w-full h-full"></div>
+
+      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-4">
+        {data.map((element, index) => (
+          <HeroSectionCard
+            key={index}
+            url={element.url}
+            isActive={index === currentIndex}
+          />
+        ))}
+      </div>
     </div>
   );
 };
