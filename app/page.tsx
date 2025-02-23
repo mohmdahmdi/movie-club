@@ -1,8 +1,8 @@
-import MainPhoto from './components/heroSection/heroSection';
+import HeroSection from "./components/heroSection/heroSection";
 export default function Home() {
   return (
-    <div className='h-[200vh]'>
-      <MainPhoto />
+    <div className="h-[200vh]">
+      <HeroSection />
     </div>
   );
 }

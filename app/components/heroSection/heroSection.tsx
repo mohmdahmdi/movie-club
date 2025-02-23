@@ -5,9 +5,8 @@ import useAxios from "@/app/hooks/useAxios";
 import { useEffect, useState } from "react";
 import { ISliderGetResponse } from "../../assets/interfaces/endpoints";
 import Image from "next/image";
-import { relative } from "path";
 
-const MainPhoto = () => {
+const HeroSection = () => {
   const { data, error, loading, get } = useAxios<ISliderGetResponse[]>();
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -29,18 +28,19 @@ const MainPhoto = () => {
   if (error) return <div>Error: {error.message}</div>;
   if (!data || data.length === 0) return <div>No images found</div>;
 
-
   return (
-    <div className="relative w-[100%] h-[100vh] -z-10">
+    <div className="relative w-full h-[100vh] -z-10">
       <Image
         src={data[currentIndex].url}
         alt={data[currentIndex].title}
         fill
-        style={{ objectFit: "cover" }}
+        className="object-cover"
         priority
       />
+
+      <div className="absolute inset-0 bg-gradient-to-t from-black/[1003] to-transparent"></div>
     </div>
   );
 };
 
-export default MainPhoto;
+export default HeroSection;
