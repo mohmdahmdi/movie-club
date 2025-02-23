@@ -13,6 +13,7 @@ const HeroSection = () => {
 
   useEffect(() => {
     get(domain + "/api/slider");
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
