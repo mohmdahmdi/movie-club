@@ -13,7 +13,7 @@ const HeroSection = () => {
 
   useEffect(() => {
     get(domain + "/api/slider");
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -42,11 +42,11 @@ const HeroSection = () => {
 
       <div className="absolute inset-0 bg-gradient-to-t from-black/100 to-transparent w-full h-full"></div>
 
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-4">
+      <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex gap-4 bg-[rgba(18, 18, 18, 0.9)] rounded-t-3xl  px-10">
         {data.map((element, index) => (
           <HeroSectionCard
             key={index}
-            url={element.url}
+            url={element.poster}
             isActive={index === currentIndex}
           />
         ))}

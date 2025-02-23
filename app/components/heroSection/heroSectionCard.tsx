@@ -6,15 +6,15 @@ const HeroSectionCard: React.FC<{ url: string; isActive: boolean }> = (
 ) => {
   return (
     <div
-      className={`w-24 h-16 overflow-hidden rounded-lg cursor-pointer border-2 ${
-        props.isActive ? "border-white" : "border-transparent"
+      className={`overflow-hidden rounded-lg cursor-pointer transition-all -translate-y-4 ${
+        props.isActive ? "border w-28 h-40 -translate-y-11 duration-500" : "w-24 h-32"
       }`}
     >
       <Image
         src={props.url}
         alt="movie"
         width={96}
-        height={64}
+        height={192}
         className="object-cover w-full h-full"
       />
     </div>
