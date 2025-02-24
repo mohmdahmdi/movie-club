@@ -10,6 +10,7 @@ import HeroSectionCard from "./heroSectionCard";
 const HeroSection = () => {
   const { data, error, loading, get } = useAxios<ISliderGetResponse[]>();
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     get(domain + "/api/slider");
@@ -20,11 +21,22 @@ const HeroSection = () => {
     if (data && data.length > 0) {
       const interval = setInterval(() => {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % data.length);
+        setProgress(0);
       }, 5000);
 
       return () => clearInterval(interval);
     }
   }, [data]);
+
+  useEffect(() => {
+    if (progress < 100) {
+      const progressInterval = setInterval(() => {
+        setProgress((prev) => prev + .72); 
+      }, 50);
+
+      return () => clearInterval(progressInterval);
+    }
+  }, [currentIndex, progress]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -51,6 +63,10 @@ const HeroSection = () => {
           />
         ))}
       </div>
+      <div
+        className="absolute bottom-1 left-1/2 -translate-x-1/2 h-1 bg-yellow-1"
+        style={{ width: `${progress}vw`, transition: "width 0.1s linear" }}
+      ></div>
     </div>
   );
 };
