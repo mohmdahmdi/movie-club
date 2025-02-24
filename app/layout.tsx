@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${vazir.className} antialiased`}
+        className={`${vazir.className} antialiased dark`}
       >
         <Navbar />
         {children}
