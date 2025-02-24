@@ -54,7 +54,7 @@ const HeroSection = () => {
 
       <div className="absolute inset-0 bg-gradient-to-t from-black/100 to-transparent w-full h-full"></div>
 
-      <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex gap-4 bg-[rgba(18, 18, 18, 0.9)] rounded-t-3xl  px-10">
+      <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex gap-4 bg-gray-2/65 rounded-t-3xl px-10 h-16">
         {data.map((element, index) => (
           <HeroSectionCard
             key={index}
