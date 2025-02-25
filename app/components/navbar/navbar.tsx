@@ -6,7 +6,7 @@ const Navbar = () => {
   return (
     <nav
       className={`w-full fixed top-0 flex text-center justify-center items-center py-2 gap-x-4 transition-colors text-white ${
-        isScrolled ? "bg-opacity-50 bg-neutral-700" : ""
+        isScrolled ? "bg-gray-1/50 backdrop-blur-lg" : ""
       }`}
     >
       <h1 className="text-xl font-bold">تایتل سایت</h1>
