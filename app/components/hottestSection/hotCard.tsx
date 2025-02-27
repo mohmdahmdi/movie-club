@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const HotCard: React.FC<{ movie: ISliderGetResponse }> = (props) => {
   return (
-    <div className="col-span-1 bg-gray-1 mx-2 px-2 rounded-lg">
+    <div className="col-span-1 bg-gray-1 mx-2 px-2 rounded-lg hover:bg-gray-2 transition-all ease-linear duration-200">
       <div className="items-center place-self-center pt-2 mb-4">
         <Image
           src={props.movie.poster}
@@ -14,9 +14,7 @@ const HotCard: React.FC<{ movie: ISliderGetResponse }> = (props) => {
         />
       </div>
       <div className="text-center ltr">
-        <div
-          className="text-ellipss break-words line-clamp-1 ltr hover:text-blue transition-colors ease-linear duration-200 cursor-pointer"
-        >
+        <div className="text-ellipss break-words line-clamp-1 ltr hover:text-blue transition-colors ease-linear duration-200 cursor-pointer">
           {props.movie.title}
         </div>
         <div>{props.movie.year}</div>
