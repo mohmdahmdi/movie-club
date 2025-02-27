@@ -32,19 +32,18 @@ const HottestSection = () => {
   }
 
   return (
-    <div>
+    <div className="mt-3 py-1 px-5">
       <div>
-        <div>
+        <div className="mb-3">
           <span>{<LocalFireDepartmentIcon />}</span>
           <span className="pr-2 text-xl font-bold">داغ ترین ها</span>
         </div>
-        <div className="grid grid-cols-8 width-full mx-2">
-          {data?.map((element, index) => {
-            return <HotCard key={index} movie={element} />;
-          })}
-        </div>
       </div>
-      <div></div>
+      <div className="grid grid-cols-8 width-full mx-2">
+        {data?.map((element, index) => {
+          return <HotCard key={index} movie={element} />;
+        })}
+      </div>
     </div>
   );
 };
