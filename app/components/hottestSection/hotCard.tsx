@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const HotCard: React.FC<{ movie: ISliderGetResponse }> = (props) => {
   return (
-    <div className="col-span-1 bg-gray-1 mx-2 px-2 rounded-lg hover:bg-gray-2 transition-all ease-linear duration-200">
+    <div className="col-span-1 bg-gray-1 mx-2 px-2 rounded-lg hover:bg-gray-2 transition-all ease-linear duration-200 cursor-pointer">
       <div className="items-center place-self-center pt-2 mb-4">
         <Image
           src={props.movie.poster}
