@@ -14,7 +14,7 @@ const HotCard: React.FC<{ movie: ISliderGetResponse }> = (props) => {
           className="h-[230px] rounded-lg"
         />
       </div>
-      <div className="text-center ltr">
+      <div className="text-center ltr pb-3">
         <div className="text-ellipss break-words line-clamp-1 ltr hover:text-blue transition-colors ease-linear duration-200 cursor-pointer">
           {props.movie.title}
         </div>
